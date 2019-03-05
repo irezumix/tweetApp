@@ -21,5 +21,17 @@ var app = new Vue({
       // this.$nextTick()
       document.getElementsByClassName('textarea').focus();
     },
+
+    addTweet() {
+      this.tweets.unshift(this.newTweet);
+      this.newTweet = '';
+
+      this.loading = true;
+      setTimeout(function () {
+        this.showModal = false;
+        this.loading = false;
+      }.bind(this), 1000);
+
+    },
   }
 });
