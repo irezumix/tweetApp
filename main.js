@@ -33,5 +33,10 @@ var app = new Vue({
       }.bind(this), 1000);
 
     },
+    deleteTweet(index) {
+      this.tweets.splice(index, 1);
+      index = this.tweets.indexOf(this.tweet);
+      this.showModal = false;
+    }
   }
 });
