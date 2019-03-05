@@ -1,72 +1,77 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Tweet app</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
-    <style>
-      .container {
-        width: 500px;
-      }
-    </style>
-  </head>
-  <body>
 
-    <div class="container">
-      <h1 class="title">Tweet app</h1>
+<head>
+  <meta charset="utf-8">
+  <title>Tweet app</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+  <style>
+    .container {
+      width: 500px;
+    }
+  </style>
+</head>
 
-      <p style="margin-bottom: 20px">
-        <a class="button is-info">Add new tweet</a>
-      </p>
+<body>
 
-      <p>No tweets yet...</p>
+  <div class="container" id="app">
+    <h1 class="title">Tweet app</h1>
 
-      <div class="card" style="margin-bottom:20px">
-        <div class="card-content">
-          <div class="content">
-            This is my tweet. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus labore reprehenderit officia natus dolores quam explicabo sed, quod cumque nulla.
-          </div>
-        </div>
-        <footer class="card-footer">
-          <a href="#" class="card-footer-item">Delete</a>
-        </footer>
-      </div>
+    <p style="margin-bottom: 20px">
+      <a class="button is-info" @click="showmodal">
+        Add new tweet</a>
+    </p>
 
+    <p v-if="!tweets.length">No tweets yet...</p>
 
-      <!-- Modal -->
-      <div class="modal">
-        <div class="modal-background"></div>
-        <div class="modal-card">
-          <header class="modal-card-head">
-            <p class="modal-card-title">Add new tweet</p>
-            <button class="delete" aria-label="close"></button>
-          </header>
-          <section class="modal-card-body">
-
-            <div class="field">
-              <label class="label">Tweet</label>
-              <div class="control">
-                <textarea class="textarea" placeholder="Textarea"></textarea>
-              </div>
-            </div>
-
-          </section>
-          <footer class="modal-card-foot">
-            <p style="margin-right: 20px">
-              140
-            </p>
-            <button class="button is-success">Save tweet</button>
-          </footer>
+    <div class="card" style="margin-bottom:20px" v-for="(tweet,index) in tweets">
+      <div class="card-content">
+        <div class="content">
+          {{tweet}}
         </div>
       </div>
-
-
+      <footer class="card-footer">
+        <a href="#" class="card-footer-item" @click="deleteTweet(index)">Delete</a>
+      </footer>
     </div>
 
 
+    <!-- Modal -->
+    <div class="modal" v-bind:class="{ 'is-active': showModal}">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title" id="Add-tweet">Add new tweet</p>
+          <button class="delete" aria-label="close" @click="showModal=false"></button>
+        </header>
+        <section class="modal-card-body">
+
+          <div class="field">
+            <label class="label">Tweet</label>
+            <div class="control">
+              <textarea class="textarea" placeholder="Textarea" v-model="newTweet" :maxlength="maxChars"></textarea>
+            </div>
+          </div>
+
+        </section>
+        <footer class="modal-card-foot">
+          <p style="margin-right: 20px">
+            {{charsRemaining}}
+          </p>
+          <button class="button is-success" @click="addTweet" v-bind:class="{ 'is-loading': loading}" v-bind:disabled="newTweet === ''">Save
+            tweet</button>
+        </footer>
+      </div>
+    </div>
 
 
-    <script src="https://unpkg.com/vue@2.6.7/"></script>
-    <script src="main.js"></script>
-  </body>
+  </div>
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.7/dist/vue.js"></script>
+  <script src="main.js"></script>
+</body>
+
 </html>

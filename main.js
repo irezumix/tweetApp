@@ -11,9 +11,15 @@ var app = new Vue({
     loading: false
   },
   computed: {
-    charactersRemaining: function () {
+    charsRemaining: function () {
       return this.maxChars - this.newTweet.length;
     }
   },
-  methods: {}
+  methods: {
+    showmodal() {
+      this.showModal = true;
+      // this.$nextTick()
+      document.getElementsByClassName('textarea').focus();
+    },
+  }
 });
